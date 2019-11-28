@@ -5,7 +5,6 @@
  *     2. Create instance of any GameController Class and assign it to BulletLauncher.
  * ===================================================================================*/
 
-using System;
 using UnityEngine;
 
 namespace MissileCommander
@@ -18,7 +17,9 @@ namespace MissileCommander
         private void Awake()
         {
             _launcher = Instantiate(launcherPrefab);
-            _launcher.SetGameController(new MouseGameController());
+
+            MouseGameController mouseController = gameObject.AddComponent<MouseGameController>();
+            mouseController.FireButtonPressed += _launcher.OnFireButtonPressed;
         }
     }
 }

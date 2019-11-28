@@ -1,14 +1,20 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace MissileCommander
 {
-    public class KeyGameController : IGameController
+    [Obsolete]
+    public class KeyGameController : MonoBehaviour, IGameController
     {
-        private KeyCode _fireButton = KeyCode.Space;
-        
-        public bool FireButtonPressed()
+        [SerializeField] private KeyCode fireButton = KeyCode.Space;
+        public event Action FireButtonPressed = delegate {  };
+
+        private void Update()
         {
-            return Input.GetKeyDown(_fireButton);
+            if (Input.GetKeyDown(fireButton))
+            {
+                FireButtonPressed();
+            }
         }
     }
 }
