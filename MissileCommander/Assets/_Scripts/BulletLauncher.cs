@@ -1,18 +1,32 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
-public class BulletLauncher : MonoBehaviour
+namespace MissileCommander
 {
-    // Start is called before the first frame update
-    void Start()
+    public class BulletLauncher : MonoBehaviour
     {
-        
-    }
+        private IGameController _controller;
 
-    // Update is called once per frame
-    void Update()
-    {
+
+        public void SetGameController(IGameController controller)
+        {
+            _controller = controller;
+        }
         
+        private void Update()
+        {
+            if (_controller != null)
+            {
+                if (_controller.FireButtonPressed())
+                {
+                    Debug.Log("Bullet Fired!");
+                }
+            }
+            else
+            {
+                Debug.Log("GameController is null!");
+            }
+        }
+
     }
 }
