@@ -4,9 +4,14 @@ namespace MissileCommander
 {
     public class BulletLauncher : MonoBehaviour
     {
-        public void OnFireButtonPressed(Vector3 position)
+        [SerializeField] private Bullet bulletPrefab;
+        [SerializeField] private Transform firePosition;
+        
+        public void OnFireButtonPressed(Vector3 mousePosition)
         {
-            Debug.Log(position);
+            // Instantiate Bullet
+            Bullet bullet = Instantiate<Bullet>(bulletPrefab);
+            bullet.Activate(firePosition.position, mousePosition);
         }
     }
 }
