@@ -2,7 +2,7 @@
 
 namespace MissileCommander
 {
-    public class Bullet : MonoBehaviour
+    public class Bullet : RecyclableObject
     {
         [SerializeField] private float moveSpeed = 5f;
 

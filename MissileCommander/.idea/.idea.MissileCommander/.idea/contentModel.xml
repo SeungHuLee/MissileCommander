@@ -9,10 +9,12 @@
         <e p="_Scripts" t="Include">
           <e p="Bullet.cs" t="Include" />
           <e p="BulletLauncher.cs" t="Include" />
+          <e p="Factory.cs" t="Include" />
           <e p="GameManager.cs" t="Include" />
           <e p="IGameController.cs" t="Include" />
           <e p="KeyGameController.cs" t="Include" />
           <e p="MouseGameController.cs" t="Include" />
+          <e p="RecyclableObject.cs" t="Include" />
         </e>
       </e>
       <e p="MissileCommander.sln" t="IncludeFlat" />
