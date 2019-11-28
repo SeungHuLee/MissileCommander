@@ -20,6 +20,13 @@ namespace MissileCommander
             // Instantiate Bullet
             Bullet bullet = _bulletFactory.Get() as Bullet;
             bullet.Activate(firePosition.position, mousePosition);
+            bullet.OnDestroyed += OnBulletDestroyed;
+        }
+
+        public void OnBulletDestroyed(Bullet usedBullet)
+        {
+            usedBullet.OnDestroyed -= OnBulletDestroyed;
+            _bulletFactory.ReturnToPool(usedBullet);
         }
     }
 }

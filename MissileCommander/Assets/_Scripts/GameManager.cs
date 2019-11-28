@@ -19,7 +19,7 @@ namespace MissileCommander
             _launcher = Instantiate(launcherPrefab);
 
             MouseGameController mouseController = gameObject.AddComponent<MouseGameController>();
-            mouseController.FireButtonPressed += _launcher.OnFireButtonPressed;
+            mouseController.OnFireButtonPressed += _launcher.OnFireButtonPressed;
         }
     }
 }

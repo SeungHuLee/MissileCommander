@@ -6,7 +6,7 @@ namespace MissileCommander
     public class MouseGameController : MonoBehaviour, IGameController
     {
         private Camera _mainCamera;
-        public event Action<Vector3> FireButtonPressed = delegate {  };
+        public event Action<Vector3> OnFireButtonPressed = delegate {  };
 
         private void Awake()
         {
@@ -17,7 +17,7 @@ namespace MissileCommander
         {
             if (Input.GetMouseButtonDown(0))
             {
-                FireButtonPressed(GetClickPosition(Input.mousePosition));
+                OnFireButtonPressed(GetClickPosition(Input.mousePosition));
             }
         }
 
