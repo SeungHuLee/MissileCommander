@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
     <e p="C:\Users\lsh12\.Rider2019.2\system\extResources" t="IncludeRecursive" />
@@ -9,6 +9,7 @@
         <e p="_Scripts" t="Include">
           <e p="Bullet.cs" t="Include" />
           <e p="BulletLauncher.cs" t="Include" />
+          <e p="Explosion.cs" t="Include" />
           <e p="Factory.cs" t="Include" />
           <e p="GameManager.cs" t="Include" />
           <e p="IGameController.cs" t="Include" />

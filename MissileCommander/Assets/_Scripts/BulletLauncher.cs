@@ -6,16 +6,19 @@ namespace MissileCommander
     public class BulletLauncher : MonoBehaviour
     {
         [SerializeField] private Bullet bulletPrefab;
+        [SerializeField] private Explosion explosionPrefab;
         [SerializeField] private Transform firePosition;
         [SerializeField] private float fireDelay = 0.5f;
         private float _elapsedFireTime;
         private bool _canShoot = true;
 
         private Factory _bulletFactory;
+        private Factory _explosionFactory;
 
         private void Awake()
         {
             _bulletFactory = new Factory(bulletPrefab);
+            _explosionFactory = new Factory(explosionPrefab);
         }
 
         private void Update()
@@ -36,17 +39,28 @@ namespace MissileCommander
             if (!_canShoot) { return; }
             
             // Instantiate Bullet
-            Bullet bullet = _bulletFactory.Get() as Bullet;
+            RecyclableObject bullet = _bulletFactory.Get();
             bullet.Activate(firePosition.position, mousePosition);
-            bullet.OnDestroyed += OnBulletDestroyed;
+            bullet.onDestroyed += OnBulletExplode;
 
             _canShoot = false;
         }
 
-        public void OnBulletDestroyed(Bullet usedBullet)
+        public void OnBulletExplode(RecyclableObject usedBullet)
         {
-            usedBullet.OnDestroyed -= OnBulletDestroyed;
+            Vector3 lastBulletPos = usedBullet.CachedTransform.position;
+            usedBullet.onDestroyed -= OnBulletExplode;
             _bulletFactory.ReturnToPool(usedBullet);
+            
+            RecyclableObject explosion = _explosionFactory.Get();
+            explosion.Activate((lastBulletPos));
+            explosion.onDestroyed += OnExplosionDestroyed;
+        }
+
+        private void OnExplosionDestroyed(RecyclableObject explosion)
+        {
+            explosion.onDestroyed -= OnExplosionDestroyed;
+            _explosionFactory.ReturnToPool(explosion);
         }
     }
 }
