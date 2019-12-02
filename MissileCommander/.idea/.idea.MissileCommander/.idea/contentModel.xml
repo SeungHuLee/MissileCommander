@@ -18,6 +18,7 @@
           <e p="KeyGameController.cs" t="Include" />
           <e p="MouseGameController.cs" t="Include" />
           <e p="RecyclableObject.cs" t="Include" />
+          <e p="TimeManager.cs" t="Include" />
         </e>
       </e>
       <e p="MissileCommander.sln" t="IncludeFlat" />

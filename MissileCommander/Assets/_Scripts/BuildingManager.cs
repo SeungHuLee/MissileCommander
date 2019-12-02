@@ -17,8 +17,6 @@ namespace MissileCommander
             
             Debug.Assert(this._buildingPrefab != null, "BuildingManager : Prefab is null!");
             Debug.Assert(this._buildingLocators != null, "BuildingManager : Locators are null!");
-            
-            SpawnBuildings();
         }
 
         public void SpawnBuildings()
@@ -35,6 +33,11 @@ namespace MissileCommander
                 building.transform.position = _buildingLocators[i].position;
                 _buildings.Add(building);
             }
+        }
+
+        public void OnGameStart()
+        {
+            SpawnBuildings();
         }
     }
 }

@@ -11,6 +11,7 @@ namespace MissileCommander
         [SerializeField] private float fireDelay = 0.5f;
         private float _elapsedFireTime;
         private bool _canShoot = true;
+        private bool _isGameStarted = false;
 
         private Factory _bulletFactory;
         private Factory _explosionFactory;
@@ -23,6 +24,8 @@ namespace MissileCommander
 
         private void Update()
         {
+            if (!_isGameStarted) { return; }
+            
             if (!_canShoot)
             {
                 _elapsedFireTime += Time.deltaTime;
@@ -34,8 +37,14 @@ namespace MissileCommander
             }
         }
 
+        public void OnGameStart()
+        {
+            _isGameStarted = true;
+        }
+
         public void OnFireButtonPressed(Vector3 mousePosition)
         {
+            if (!_isGameStarted) { return; }
             if (!_canShoot) { return; }
             
             // Instantiate Bullet
