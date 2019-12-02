@@ -36,6 +36,7 @@ namespace MissileCommander
             {
                 Building building = Object.Instantiate(_buildingPrefab);
                 building.transform.position = _buildingLocators[i].position;
+                building.onDestroyed += OnBuildingDestroyed;
                 _buildings.Add(building);
             }
         }
@@ -45,6 +46,14 @@ namespace MissileCommander
             Debug.Assert(_buildings.Count > 0, "BuildingManager : No Building left in the list!");
             Building building = _buildings[Random.Range(0, _buildings.Count)];
             return building.transform.position;
+        }
+
+        private void OnBuildingDestroyed(Building building)
+        {
+            building.onDestroyed -= this.OnBuildingDestroyed;
+            int index = _buildings.IndexOf(building);
+            _buildings.RemoveAt(index);
+            Object.Destroy(building.gameObject);
         }
     }
 }
