@@ -52,6 +52,7 @@ namespace MissileCommander
             _mouseGameController.OnFireButtonPressed += _launcher.OnFireButtonPressed;
             _timeMgr.onGameStart += _buildingMgr.OnGameStart;
             _timeMgr.onGameStart += _launcher.OnGameStart;
+            _timeMgr.onGameStart += _missileMgr.OnGameStart;
         }
         
         private void UnbindEvents()
@@ -59,6 +60,7 @@ namespace MissileCommander
             _mouseGameController.OnFireButtonPressed -= _launcher.OnFireButtonPressed;
             _timeMgr.onGameStart -= _buildingMgr.OnGameStart;
             _timeMgr.onGameStart -= _launcher.OnGameStart;
+            _timeMgr.onGameStart -= _missileMgr.OnGameStart;
         }
     }
 }

@@ -19,6 +19,11 @@ namespace MissileCommander
             Debug.Assert(this._buildingLocators != null, "BuildingManager : Locators are null!");
         }
 
+        public void OnGameStart()
+        {
+            SpawnBuildings();
+        }
+        
         public void SpawnBuildings()
         {
             if (_buildings.Count > 0)
@@ -35,9 +40,11 @@ namespace MissileCommander
             }
         }
 
-        public void OnGameStart()
+        public Vector3 GetRandomBuildingPosition()
         {
-            SpawnBuildings();
+            Debug.Assert(_buildings.Count > 0, "BuildingManager : No Building left in the list!");
+            Building building = _buildings[Random.Range(0, _buildings.Count)];
+            return building.transform.position;
         }
     }
 }
