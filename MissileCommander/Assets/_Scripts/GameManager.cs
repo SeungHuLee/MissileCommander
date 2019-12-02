@@ -1,9 +1,9 @@
-﻿/* ===================================================================================
+﻿/* =============================================
  *  GameManager will work as composition root.
  *  Assigned Jobs :
- *     1. Create instance of a BulletLauncher from the prefab.
- *     2. Create instance of any GameController Class and assign it to BulletLauncher.
- * ===================================================================================*/
+ *     1. Dependency Entry Point
+ *     2. Bind Events
+ * =============================================*/
 
 using System;
 using UnityEngine;
@@ -16,10 +16,12 @@ namespace MissileCommander
         [SerializeField] private Transform launcherLocator;
         [SerializeField] private Building buildingPrefab;
         [SerializeField] private Transform[] buildingLocators;
+        [SerializeField] private Missile missilePrefab;
 
         private MouseGameController _mouseGameController;
         private BulletLauncher _launcher;
         private BuildingManager _buildingMgr;
+        private MissileManager _missileMgr;
         private TimeManager _timeMgr;
 
         private void Start()
@@ -30,6 +32,9 @@ namespace MissileCommander
             _launcher.transform.position = launcherLocator.position;
             
             _buildingMgr = new BuildingManager(buildingPrefab, buildingLocators);
+
+            _missileMgr = gameObject.AddComponent<MissileManager>();
+            _missileMgr.Initialize(new Factory(missilePrefab), _buildingMgr);
             
             _mouseGameController = gameObject.AddComponent<MouseGameController>();
             

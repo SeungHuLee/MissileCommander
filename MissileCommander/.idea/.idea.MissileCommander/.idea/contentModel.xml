@@ -16,6 +16,8 @@
           <e p="GameManager.cs" t="Include" />
           <e p="IGameController.cs" t="Include" />
           <e p="KeyGameController.cs" t="Include" />
+          <e p="Missile.cs" t="Include" />
+          <e p="MissileManager.cs" t="Include" />
           <e p="MouseGameController.cs" t="Include" />
           <e p="RecyclableObject.cs" t="Include" />
           <e p="TimeManager.cs" t="Include" />
