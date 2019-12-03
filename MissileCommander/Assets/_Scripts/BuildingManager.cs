@@ -55,6 +55,7 @@ namespace MissileCommander
         private void OnBuildingDestroyed(Building building)
         {
             Vector3 lastPos = building.transform.position;
+            lastPos.y += building.GetComponent<BoxCollider2D>().size.y * 0.5f;
             
             building.onDestroyed -= this.OnBuildingDestroyed;
             int index = _buildings.IndexOf(building);
@@ -63,6 +64,13 @@ namespace MissileCommander
 
             RecyclableObject effect = _effectFactory.Get();
             effect.Activate(lastPos);
+            effect.onDestroyed += OnEffectDestroyed;
+        }
+
+        private void OnEffectDestroyed(RecyclableObject effect)
+        {
+            effect.onDestroyed -= this.OnEffectDestroyed;
+            _effectFactory.ReturnToPool(effect);
         }
     }
 }
