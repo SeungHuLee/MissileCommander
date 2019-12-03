@@ -7,16 +7,20 @@ namespace MissileCommander
     {
         private Building _buildingPrefab;
         private Transform[] _buildingLocators;
+
+        private Factory _effectFactory;
         
         private List<Building> _buildings = new List<Building>();
 
-        public BuildingManager(Building buildingPrefab, Transform[] buildingLocators)
+        public BuildingManager(Building buildingPrefab, Transform[] buildingLocators, Factory effectFactory)
         {
             this._buildingPrefab = buildingPrefab;
             this._buildingLocators = buildingLocators;
-            
+            this._effectFactory = effectFactory;
+
             Debug.Assert(this._buildingPrefab != null, "BuildingManager : Prefab is null!");
             Debug.Assert(this._buildingLocators != null, "BuildingManager : Locators are null!");
+            Debug.Assert(this._effectFactory != null, "BuildingManager : EffectFactory is null!");
         }
 
         public void OnGameStart()
@@ -50,10 +54,15 @@ namespace MissileCommander
 
         private void OnBuildingDestroyed(Building building)
         {
+            Vector3 lastPos = building.transform.position;
+            
             building.onDestroyed -= this.OnBuildingDestroyed;
             int index = _buildings.IndexOf(building);
             _buildings.RemoveAt(index);
             Object.Destroy(building.gameObject);
+
+            RecyclableObject effect = _effectFactory.Get();
+            effect.Activate(lastPos);
         }
     }
 }

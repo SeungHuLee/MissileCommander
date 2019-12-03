@@ -11,6 +11,7 @@
           <e p="BuildingManager.cs" t="Include" />
           <e p="Bullet.cs" t="Include" />
           <e p="BulletLauncher.cs" t="Include" />
+          <e p="DestroyEffect.cs" t="Include" />
           <e p="Explosion.cs" t="Include" />
           <e p="Factory.cs" t="Include" />
           <e p="GameManager.cs" t="Include" />
@@ -20,6 +21,7 @@
           <e p="MissileManager.cs" t="Include" />
           <e p="MouseGameController.cs" t="Include" />
           <e p="RecyclableObject.cs" t="Include" />
+          <e p="Test.cs" t="Include" />
           <e p="TimeManager.cs" t="Include" />
         </e>
       </e>

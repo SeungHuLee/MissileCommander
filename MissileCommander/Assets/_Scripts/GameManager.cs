@@ -12,11 +12,17 @@ namespace MissileCommander
 {
     public class GameManager : MonoBehaviour
     {
+        [Header("BulletLauncher")]
         [SerializeField] private BulletLauncher launcherPrefab;
         [SerializeField] private Transform launcherLocator;
+        
+        [Header("Building")]
         [SerializeField] private Building buildingPrefab;
         [SerializeField] private Transform[] buildingLocators;
+        
+        [Header("Missile & Effect")]
         [SerializeField] private Missile missilePrefab;
+        [SerializeField] private DestroyEffect destroyEffect;
 
         private MouseGameController _mouseGameController;
         private BulletLauncher _launcher;
@@ -31,7 +37,7 @@ namespace MissileCommander
             _launcher = Instantiate(launcherPrefab);
             _launcher.transform.position = launcherLocator.position;
             
-            _buildingMgr = new BuildingManager(buildingPrefab, buildingLocators);
+            _buildingMgr = new BuildingManager(buildingPrefab, buildingLocators, new Factory(destroyEffect, 2));
 
             _missileMgr = gameObject.AddComponent<MissileManager>();
             _missileMgr.Initialize(new Factory(missilePrefab), _buildingMgr);
@@ -39,6 +45,7 @@ namespace MissileCommander
             _mouseGameController = gameObject.AddComponent<MouseGameController>();
             
             BindEvents();
+            
             _timeMgr.StartGame();
         }
 
