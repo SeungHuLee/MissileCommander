@@ -21,6 +21,7 @@
           <e p="MissileManager.cs" t="Include" />
           <e p="MouseGameController.cs" t="Include" />
           <e p="RecyclableObject.cs" t="Include" />
+          <e p="ScoreManager.cs" t="Include" />
           <e p="TimeManager.cs" t="Include" />
         </e>
       </e>

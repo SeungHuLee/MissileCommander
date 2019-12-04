@@ -26,11 +26,17 @@ namespace MissileCommander
         [SerializeField] private float missileSpawnInterval = 0.5f;
         [SerializeField] private int maxMissileCount = 20;
 
+        [Header("Scores")] 
+        [SerializeField] private int scorePerMissile = 50;
+
+        [SerializeField] private int scorePerBuilding = 5000;
+
         private MouseGameController _mouseGameController;
         private BulletLauncher _launcher;
         private BuildingManager _buildingMgr;
         private MissileManager _missileMgr;
         private TimeManager _timeMgr;
+        private ScoreManager _scoreMgr;
 
         private void Start()
         {
@@ -43,6 +49,8 @@ namespace MissileCommander
 
             _missileMgr = gameObject.AddComponent<MissileManager>();
             _missileMgr.Initialize(new Factory(missilePrefab), _buildingMgr, maxMissileCount, missileSpawnInterval);
+            
+            _scoreMgr = new ScoreManager(scorePerBuilding, scorePerMissile);
             
             _mouseGameController = gameObject.AddComponent<MouseGameController>();
             
@@ -62,6 +70,7 @@ namespace MissileCommander
             _timeMgr.onGameStart += _buildingMgr.OnGameStart;
             _timeMgr.onGameStart += _launcher.OnGameStart;
             _timeMgr.onGameStart += _missileMgr.OnGameStart;
+            _missileMgr.onMissileDestroyed += _scoreMgr.OnMissileDestroyed;
         }
         
         private void UnbindEvents()
@@ -70,6 +79,7 @@ namespace MissileCommander
             _timeMgr.onGameStart -= _buildingMgr.OnGameStart;
             _timeMgr.onGameStart -= _launcher.OnGameStart;
             _timeMgr.onGameStart -= _missileMgr.OnGameStart;
+            _missileMgr.onMissileDestroyed -= _scoreMgr.OnMissileDestroyed;
         }
     }
 }

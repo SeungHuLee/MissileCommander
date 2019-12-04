@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 336636678138189459}
   - component: {fileID: 1962218832182758602}
   - component: {fileID: 8426078496689282687}
+  - component: {fileID: 4279254370488952402}
   m_Layer: 0
   m_Name: Explosion
   m_TagString: Untagged
@@ -164,4 +165,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f169c4ff18df452ea48010f9ab81b821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeToRemove: 1
+  timeToRemove: 1
+--- !u!58 &4279254370488952402
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6469101167713022457}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.75

@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -6,7 +8,6 @@ namespace MissileCommander
 {
     public class MissileManager : MonoBehaviour
     {
-        [SerializeField] private Missile missilePrefab;
         private Factory _missileFactory;
         private BuildingManager _buildingMgr;
 
@@ -18,6 +19,10 @@ namespace MissileCommander
         private Coroutine _spawningMissile;
         
         private Camera _mainCamera;
+        
+        private List<RecyclableObject> _missiles = new List<RecyclableObject>();
+        
+        public event Action onMissileDestroyed;
 
         private void Awake()
         {
@@ -54,6 +59,7 @@ namespace MissileCommander
             missile.Activate(GetMissileSpawnPosition(), _buildingMgr.GetRandomBuildingPosition());
 
             missile.onDestroyed += this.OnMissileDestroyed;
+            _missiles.Add(missile);
 
             _currentMissileCount++;
         }
@@ -89,7 +95,11 @@ namespace MissileCommander
         private void OnMissileDestroyed(RecyclableObject missile)
         {
             missile.onDestroyed -= this.OnMissileDestroyed;
+            int index = _missiles.IndexOf(missile);
+            _missiles.RemoveAt(index);
+            
             _missileFactory.ReturnToPool(missile);
+            onMissileDestroyed?.Invoke();
         }
     }
 }
