@@ -22,7 +22,6 @@ namespace MissileCommander
         {
             _score += _scorePerMissile;
             onScoreChanged?.Invoke(_score);
-            Debug.Log($"Score : {_score}");
         }
 
         public void OnGameOver()

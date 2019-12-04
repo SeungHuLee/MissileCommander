@@ -28,8 +28,10 @@ namespace MissileCommander
 
         [Header("Scores")] 
         [SerializeField] private int scorePerMissile = 50;
-
         [SerializeField] private int scorePerBuilding = 5000;
+
+        [Header("UI")] 
+        [SerializeField] private UIRoot UIRoot;
 
         private MouseGameController _mouseGameController;
         private BulletLauncher _launcher;
@@ -70,6 +72,8 @@ namespace MissileCommander
             _timeMgr.onGameStart += _buildingMgr.OnGameStart;
             _timeMgr.onGameStart += _launcher.OnGameStart;
             _timeMgr.onGameStart += _missileMgr.OnGameStart;
+            _timeMgr.onGameStart += UIRoot.OnGameStart;
+            _scoreMgr.onScoreChanged += UIRoot.OnScoreChanged;
             _missileMgr.onMissileDestroyed += _scoreMgr.OnMissileDestroyed;
         }
         
@@ -79,6 +83,8 @@ namespace MissileCommander
             _timeMgr.onGameStart -= _buildingMgr.OnGameStart;
             _timeMgr.onGameStart -= _launcher.OnGameStart;
             _timeMgr.onGameStart -= _missileMgr.OnGameStart;
+            _timeMgr.onGameStart -= UIRoot.OnGameStart;
+            _scoreMgr.onScoreChanged -= UIRoot.OnScoreChanged;
             _missileMgr.onMissileDestroyed -= _scoreMgr.OnMissileDestroyed;
         }
     }
