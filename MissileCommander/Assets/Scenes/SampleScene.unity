@@ -364,7 +364,7 @@ MonoBehaviour:
   - {fileID: 598110664}
   missilePrefab: {fileID: 5711166924668602170, guid: 6e3ed30d88f130b488476553a9ef130c,
     type: 3}
-  destroyEffect: {fileID: 8157270428527755281, guid: 460346ccc206af549931e9ccb77609ba,
+  destroyEffect: {fileID: 6117580419327657503, guid: 460346ccc206af549931e9ccb77609ba,
     type: 3}
 --- !u!4 &1776773259
 Transform:

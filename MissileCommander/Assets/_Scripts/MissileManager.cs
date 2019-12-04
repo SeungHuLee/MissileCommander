@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -11,6 +11,12 @@ namespace MissileCommander
         private BuildingManager _buildingMgr;
 
         private bool _isInitialized = false;
+        private int _maxMissileCount = 20;
+        private float _missileSpawnInterval = 0.5f;
+        private int _currentMissileCount;
+
+        private Coroutine _spawningMissile;
+        
         private Camera _mainCamera;
 
         private void Awake()
@@ -18,12 +24,14 @@ namespace MissileCommander
             _mainCamera = Camera.main != null ? Camera.main : FindObjectOfType<Camera>();
         }
 
-        public void Initialize(Factory missileFactory, BuildingManager buildingMgr)
+        public void Initialize(Factory missileFactory, BuildingManager buildingMgr, int maxMissileCount, float missileSpawnInterval)
         {
             if (_isInitialized) { return; }
             
             this._missileFactory = missileFactory;
             this._buildingMgr = buildingMgr;
+            this._maxMissileCount = maxMissileCount;
+            this._missileSpawnInterval = missileSpawnInterval;
             
             Debug.Assert(_missileFactory != null, "MissileManager : Missile Factory is null!");
             Debug.Assert(_buildingMgr != null, "MissileManager : BuildingManager is null!");
@@ -33,7 +41,8 @@ namespace MissileCommander
 
         public void OnGameStart()
         {
-            SpawnMissile();
+            _currentMissileCount = 0;
+            _spawningMissile = StartCoroutine(AutoSpawnMissile());
         }
 
         private void SpawnMissile()
@@ -45,6 +54,8 @@ namespace MissileCommander
             missile.Activate(GetMissileSpawnPosition(), _buildingMgr.GetRandomBuildingPosition());
 
             missile.onDestroyed += this.OnMissileDestroyed;
+
+            _currentMissileCount++;
         }
 
         private Vector3 GetMissileSpawnPosition()
@@ -56,6 +67,23 @@ namespace MissileCommander
             spawnPosition = _mainCamera.ViewportToWorldPoint(spawnPosition);
             spawnPosition.z = 0f;
             return spawnPosition;
+        }
+
+        private IEnumerator AutoSpawnMissile()
+        {
+            WaitForSeconds spawnInterval = new WaitForSeconds(_missileSpawnInterval);
+            while (_currentMissileCount < _maxMissileCount)
+            {
+                yield return spawnInterval;
+                
+                if (!_buildingMgr.HasBuilding)
+                {
+                    Debug.LogWarning("There is no building left to target!");
+                    yield break;
+                }
+                
+                SpawnMissile();
+            }
         }
 
         private void OnMissileDestroyed(RecyclableObject missile)

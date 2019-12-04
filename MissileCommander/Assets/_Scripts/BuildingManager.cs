@@ -12,6 +12,8 @@ namespace MissileCommander
         
         private List<Building> _buildings = new List<Building>();
 
+        public bool HasBuilding => _buildings.Count > 0;
+
         public BuildingManager(Building buildingPrefab, Transform[] buildingLocators, Factory effectFactory)
         {
             this._buildingPrefab = buildingPrefab;

@@ -32,6 +32,14 @@ namespace MissileCommander
             if (other.TryGetComponent(out Building building))
             {
                 DestroySelf();
+                return;
+            }
+
+            if (other.TryGetComponent(out Explosion explosion))
+            {
+                Debug.Log("Intercepted by explosion!");
+                DestroySelf();
+                return;
             }
         }
 

@@ -23,6 +23,8 @@ namespace MissileCommander
         [Header("Missile & Effect")]
         [SerializeField] private Missile missilePrefab;
         [SerializeField] private DestroyEffect destroyEffect;
+        [SerializeField] private float missileSpawnInterval = 0.5f;
+        [SerializeField] private int maxMissileCount = 20;
 
         private MouseGameController _mouseGameController;
         private BulletLauncher _launcher;
@@ -40,7 +42,7 @@ namespace MissileCommander
             _buildingMgr = new BuildingManager(buildingPrefab, buildingLocators, new Factory(destroyEffect, 2));
 
             _missileMgr = gameObject.AddComponent<MissileManager>();
-            _missileMgr.Initialize(new Factory(missilePrefab), _buildingMgr);
+            _missileMgr.Initialize(new Factory(missilePrefab), _buildingMgr, maxMissileCount, missileSpawnInterval);
             
             _mouseGameController = gameObject.AddComponent<MouseGameController>();
             
