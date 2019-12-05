@@ -8,7 +8,8 @@ namespace MissileCommander
         protected bool isActivated = false;
         protected Vector3 targetPosition;
         public Action<RecyclableObject> onDestroyed;
-        
+        public Action<RecyclableObject> onOutOfScreen;
+
         private Transform _cachedTransform;
         public Transform CachedTransform => _cachedTransform ? _cachedTransform : (_cachedTransform = transform);
 
