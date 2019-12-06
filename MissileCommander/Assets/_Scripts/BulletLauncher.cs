@@ -51,6 +51,8 @@ namespace MissileCommander
             RecyclableObject bullet = _bulletFactory.Get();
             bullet.Activate(firePosition.position, mousePosition);
             bullet.onDestroyed += OnBulletExplode;
+            
+            AudioManager.Instance.PlaySound(SoundID.Shoot);
 
             _canShoot = false;
         }
@@ -64,6 +66,8 @@ namespace MissileCommander
             RecyclableObject explosion = _explosionFactory.Get();
             explosion.Activate((lastBulletPos));
             explosion.onDestroyed += OnExplosionDestroyed;
+            
+            AudioManager.Instance.PlaySound(SoundID.BulletExplosion);
         }
 
         private void OnExplosionDestroyed(RecyclableObject explosion)

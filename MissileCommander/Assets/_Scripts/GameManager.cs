@@ -74,6 +74,7 @@ namespace MissileCommander
         private void OnAllBuildingDestroyed()
         {
             _isAllBuildingDestroyed = true;
+            AudioManager.Instance.PlaySound(SoundID.GameOver);
             onGameOver?.Invoke(false, _buildingMgr.BuildingCount);
         }
 
@@ -89,6 +90,7 @@ namespace MissileCommander
 
             if (!_isAllBuildingDestroyed)
             {
+                AudioManager.Instance.PlaySound(SoundID.GameOver);
                 onGameOver?.Invoke(true, _buildingMgr.BuildingCount);
             }
         }

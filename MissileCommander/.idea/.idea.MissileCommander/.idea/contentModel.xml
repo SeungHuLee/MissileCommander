@@ -7,11 +7,19 @@
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="_Scripts" t="Include">
+          <e p="AudioManager.cs" t="Include" />
+          <e p="AudioStorage.cs" t="Include" />
           <e p="Building.cs" t="Include" />
           <e p="BuildingManager.cs" t="Include" />
           <e p="Bullet.cs" t="Include" />
           <e p="BulletLauncher.cs" t="Include" />
           <e p="DestroyEffect.cs" t="Include" />
+          <e p="Devcat" t="Include">
+            <e p="BitConvert.cs" t="Include" />
+            <e p="EnumDictionary.cs" t="Include" />
+            <e p="EnumHashSet.cs" t="Include" />
+            <e p="ValueCastTo.cs" t="Include" />
+          </e>
           <e p="Explosion.cs" t="Include" />
           <e p="Factory.cs" t="Include" />
           <e p="GameManager.cs" t="Include" />

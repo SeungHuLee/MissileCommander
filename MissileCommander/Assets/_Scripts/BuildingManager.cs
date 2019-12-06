@@ -61,6 +61,8 @@ namespace MissileCommander
 
         private void OnBuildingDestroyed(Building building)
         {
+            AudioManager.Instance.PlaySound(SoundID.BuildingExplosion);
+            
             Vector3 lastPos = building.transform.position;
             lastPos.y += building.GetComponent<BoxCollider2D>().size.y * 0.5f;
             
