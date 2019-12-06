@@ -24,9 +24,12 @@ namespace MissileCommander
             onScoreChanged?.Invoke(_score);
         }
 
-        public void OnGameOver()
+        public void OnGameOver(bool isVictory, int buildingCount)
         {
-            
+            if (buildingCount == 0) { return; }
+
+            _score += buildingCount * _scorePerBuilding;
+            onScoreChanged?.Invoke(_score);
         }
     }
 }

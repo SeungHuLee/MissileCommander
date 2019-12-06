@@ -71,5 +71,10 @@ namespace MissileCommander
             explosion.onDestroyed -= OnExplosionDestroyed;
             _explosionFactory.ReturnToPool(explosion);
         }
+
+        public void OnGameOver(bool isVictory, int buildingCount)
+        {
+            _isGameStarted = false;
+        }
     }
 }

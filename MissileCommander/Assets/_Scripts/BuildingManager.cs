@@ -1,5 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 namespace MissileCommander
 {
@@ -13,6 +16,8 @@ namespace MissileCommander
         private List<Building> _buildings = new List<Building>();
 
         public bool HasBuilding => _buildings.Count > 0;
+        public int BuildingCount => _buildings.Count;
+        public event Action onAllBuildingDestroyed;
 
         public BuildingManager(Building buildingPrefab, Transform[] buildingLocators, Factory effectFactory)
         {
@@ -67,6 +72,11 @@ namespace MissileCommander
             RecyclableObject effect = _effectFactory.Get();
             effect.Activate(lastPos);
             effect.onDestroyed += OnEffectDestroyed;
+
+            if (_buildings.Count == 0)
+            {
+                onAllBuildingDestroyed?.Invoke();
+            }
         }
 
         private void OnEffectDestroyed(RecyclableObject effect)

@@ -23,6 +23,7 @@ namespace MissileCommander
         private List<RecyclableObject> _missiles = new List<RecyclableObject>();
 
         public event Action onMissileDestroyed;
+        public event Action onAllMissileReturned;
 
         private void Awake()
         {
@@ -116,6 +117,27 @@ namespace MissileCommander
             _missiles.RemoveAt(index);
 
             _missileFactory.ReturnToPool(missile);
+
+            IsAllMissileReturned();
+        }
+        
+        public void OnGameOver(bool isVictory, int buildingCount)
+        {
+            if (_missiles.Count == 0) { return; }
+            
+            foreach (RecyclableObject missile in _missiles)
+            {
+                _missileFactory.ReturnToPool(missile);
+            }
+            
+        }
+
+        private void IsAllMissileReturned()
+        {
+            if (_currentMissileCount == _maxMissileCount && _missiles.Count == 0)
+            {
+                onAllMissileReturned?.Invoke();
+            }
         }
     }
 }

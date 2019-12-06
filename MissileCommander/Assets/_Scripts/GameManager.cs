@@ -1,11 +1,12 @@
 ﻿/* =============================================
- *  GameManager will work as composition root.
+ *  GameManager will work as a composition root.
  *  Assigned Jobs :
  *     1. Dependency Entry Point
  *     2. Bind Events
  * =============================================*/
 
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace MissileCommander
@@ -33,12 +34,21 @@ namespace MissileCommander
         [Header("UI")] 
         [SerializeField] private UIRoot UIRoot;
 
+        private bool _isAllBuildingDestroyed = false;
+
         private MouseGameController _mouseGameController;
         private BulletLauncher _launcher;
         private BuildingManager _buildingMgr;
         private MissileManager _missileMgr;
         private TimeManager _timeMgr;
         private ScoreManager _scoreMgr;
+
+        /// <summary>
+        /// Event to check :
+        /// 1. whether the player won or lost
+        /// 2. How many buildings left
+        /// </summary>
+        public event Action<bool, int> onGameOver;
 
         private void Start()
         {
@@ -61,6 +71,28 @@ namespace MissileCommander
             _timeMgr.StartGame();
         }
 
+        private void OnAllBuildingDestroyed()
+        {
+            _isAllBuildingDestroyed = true;
+            onGameOver?.Invoke(false, _buildingMgr.BuildingCount);
+        }
+
+        private void OnAllMissileReturned()
+        {
+            Debug.Log("YOU WIN!!!");
+            StartCoroutine(CheckGameOver());
+        }
+
+        private IEnumerator CheckGameOver()
+        {
+            yield return null;
+
+            if (!_isAllBuildingDestroyed)
+            {
+                onGameOver?.Invoke(true, _buildingMgr.BuildingCount);
+            }
+        }
+
         private void OnDestroy()
         {
             UnbindEvents();
@@ -68,24 +100,40 @@ namespace MissileCommander
 
         private void BindEvents()
         {
-            _mouseGameController.OnFireButtonPressed += _launcher.OnFireButtonPressed;
             _timeMgr.onGameStart += _buildingMgr.OnGameStart;
             _timeMgr.onGameStart += _launcher.OnGameStart;
             _timeMgr.onGameStart += _missileMgr.OnGameStart;
             _timeMgr.onGameStart += UIRoot.OnGameStart;
+            
+            _mouseGameController.OnFireButtonPressed += _launcher.OnFireButtonPressed;
             _scoreMgr.onScoreChanged += UIRoot.OnScoreChanged;
             _missileMgr.onMissileDestroyed += _scoreMgr.OnMissileDestroyed;
+            _buildingMgr.onAllBuildingDestroyed += OnAllBuildingDestroyed;
+            _missileMgr.onAllMissileReturned += OnAllMissileReturned;
+
+            this.onGameOver += _launcher.OnGameOver;
+            this.onGameOver += _missileMgr.OnGameOver;
+            this.onGameOver += _scoreMgr.OnGameOver;
+            this.onGameOver += UIRoot.OnGameOver;
         }
         
         private void UnbindEvents()
         {
-            _mouseGameController.OnFireButtonPressed -= _launcher.OnFireButtonPressed;
             _timeMgr.onGameStart -= _buildingMgr.OnGameStart;
             _timeMgr.onGameStart -= _launcher.OnGameStart;
             _timeMgr.onGameStart -= _missileMgr.OnGameStart;
             _timeMgr.onGameStart -= UIRoot.OnGameStart;
+            
+            _mouseGameController.OnFireButtonPressed -= _launcher.OnFireButtonPressed;
             _scoreMgr.onScoreChanged -= UIRoot.OnScoreChanged;
             _missileMgr.onMissileDestroyed -= _scoreMgr.OnMissileDestroyed;
+            _buildingMgr.onAllBuildingDestroyed -= OnAllBuildingDestroyed;
+            _missileMgr.onAllMissileReturned -= OnAllMissileReturned;
+            
+            this.onGameOver += _launcher.OnGameOver;
+            this.onGameOver += _missileMgr.OnGameOver;
+            this.onGameOver += _scoreMgr.OnGameOver;
+            this.onGameOver += UIRoot.OnGameOver;
         }
     }
 }
